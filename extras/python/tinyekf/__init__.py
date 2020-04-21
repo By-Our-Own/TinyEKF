@@ -38,7 +38,7 @@ class EKF(object):
         # Identity matrix will be usefel later
         self.I = np.eye(n)
 
-    def step(self, z):
+    def step(self, z, u):
         '''
         Runs one step of the EKF on observations z, where z is a tuple of
         length M.
@@ -48,7 +48,7 @@ class EKF(object):
         # Predict ----------------------------------------------------
 
         # $\hat{x}_k = f(\hat{x}_{k-1})$
-        self.x, F = self.f(self.x)
+        self.x, F = self.f(self.x, u)
 
         # $P_k = F_{k-1} P_{k-1} F^T_{k-1} + Q_{k-1}$
         self.P_pre = F * self.P_post * F.T + self.Q
